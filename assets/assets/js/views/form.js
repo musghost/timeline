@@ -1,53 +1,41 @@
-var app = app || {};
+var app = app || {};
 
-app.EventView = Backbone.View.extend({
+var form = Backbone.View.extend({	
+
+	el: '#main-content',
+
+	itemTemplate: _.template($('#item-add-event-template').html()),
 
 	events: {
-		'click #btnAdd': 	'remove',
+		'click #btnAdd': 'create',
 	},
-
-	template: _.template($('evet/create').html()),
 
 	initialize: function(){
+    //Params form for event object
+    this.$date=this.$('#date-add');
+    this.$title=this.$('#title-add');
+    this.$description=this.$('#description-add');
+    this.$imageURL=this.$('#imageURL-add');
 
 	},
 
-	setPair: function(pair){
-		this.pair = pair;
+	create:function(){
+		
+		//Create new object event
+		var objEvent=Event.create{
+		 date:date,
+		 title:title,
+		 description:description,
+		 imageURL:imageURL	
+		};
+
+		//Save 
+		objEvent.save();
+
+		//Collections
+		var collectionEvent=new Events();
+		collectionEvent.add(objEvent);
 	},
-
-	render: function(){
-
-		if(this.model.changed.id !== undefined) return;
-
-		this.$el.html(this.template(this.model.toJSON()));
-
-		this.$info = this.$el.find('.timeline-heading-info');
-		this.$share = this.$el.find('.timeline-heading-share');
-
-		if(!this.pair){
-			this.$el.addClass('timeline-inverted');
-			this.$el.find('.timeline-info').removeClass('inverted');
-		}
-
-		return this;
-	},
-
-	remove: function(){
-		this.$el.remove();
-	},
-
-	share: function(a){
-		a.preventDefault();
-		this.$info.animate({
-			'top': '-100%'
-		}, 500, function(){
-			$(this).addClass('hide').attr({'style': ''})
-		});
-		this.$share.removeClass('hide').css({ 'top': '100%'}).animate({
-			'top': '0'
-		}, 500, function(){
-			$(this).addClass('hold').attr({'style': ''})
-		});
-	}
 });
+
+app.timeline = new Timeline();
