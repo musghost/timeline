@@ -35,10 +35,23 @@ module.exports.routes = {
   '/': {
     view: 'home/index'
   },
+
   '/create':{
     controller: 'IndexController',
     action: 'create'
   },
+
+   '/createEvent':{
+    controller: 'EventController',
+    action: 'create',
+    view:'event/create'
+  },
+
+  'post/event': {
+        controller    : 'event',
+        action        : 'create'
+    },
+    
   '/show': {
     controller: 'IndexController',
     action: 'show'

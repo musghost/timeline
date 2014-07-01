@@ -17,12 +17,34 @@
 
 module.exports = {
     
-  
+    create: function (req, res) {
+	  	if(req.method=="POST"&&req.param("Event",null)!=null){
+	                  
+			Event.create(req.param("Event")).done(function(err,model){
+	                
+	                  
+	                  // Error handling
+				if (err) {
+	                  
+					res.send("Error:Sorry!Something went Wrong");
 
-
-  /**
+				}else {
+	                        
+					res.render("home/index");
+	                      
+				}
+	                
+	                
+			});
+	                
+		} else { 
+			res.render("event/create");
+		}
+ 
+	},
+/**
    * Overrides for the settings in `config/controllers.js`
-   * (specific to EventController)
+   * (specific to EventsController)
    */
   _config: {}
 
